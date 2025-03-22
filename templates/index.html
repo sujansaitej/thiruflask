@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Matrix Cryptography</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+            text-align: center;
+            padding: 20px;
+        }
+        h2 {
+            color: #333;
+        }
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            display: inline-block;
+            margin-top: 20px;
+        }
+        select, input[type="text"], input[type="number"], button {
+            margin: 10px;
+            padding: 5px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        .output {
+            margin-top: 20px;
+            background: #e0ffe0;
+            padding: 10px;
+            border-radius: 6px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <h2>Matrix Cryptography Tool</h2>
+    
+    <form method="post" action="/process">
+        <label for="matrixSize">Select Matrix Size:</label><br>
+        <select id="matrixSize" name="matrixSize" onchange="generateInputs()">
+            <option value="2">2x2</option>
+            <option value="3" selected>3x3</option>
+        </select><br>
+
+        <div id="matrixInputs"></div>
+
+        <label for="message">Enter Message (A-Z only):</label><br>
+        <input type="text" id="message" name="message" required><br>
+
+        <label for="operation">Operation:</label><br>
+        <select id="operation" name="operation">
+            <option value="encrypt">Encrypt</option>
+            <option value="decrypt">Decrypt</option>
+        </select><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    {% if output %}
+    <div class="output">
+        <strong>{{ label }} Message:</strong> {{ output }}
+    </div>
+    {% endif %}
+
+    <script>
+        function generateInputs() {
+            const size = document.getElementById('matrixSize').value;
+            const container = document.getElementById('matrixInputs');
+            container.innerHTML = '';
+            for (let i = 0; i < size; i++) {
+                for (let j = 0; j < size; j++) {
+                    container.innerHTML += `<input type="number" name="m${i}${j}" required>`;
+                }
+                container.innerHTML += '<br>';
+            }
+        }
+        window.onload = generateInputs;
+    </script>
+</body>
+</html>
